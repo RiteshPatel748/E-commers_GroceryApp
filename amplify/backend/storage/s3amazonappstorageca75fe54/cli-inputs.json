@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3amazonappstorageca75fe54",
+  "bucketName": "amazonapp-storage-ca75fe54",
+  "policyUUID": "38c81ead",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ",
+    "CREATE_AND_UPDATE",
+    "DELETE"
+  ]
+}
