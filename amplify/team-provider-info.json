@@ -1,0 +1,23 @@
+{
+  "test": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amazonapp-test-70928-authRole",
+      "UnauthRoleArn": "arn:aws:iam::900826797109:role/amplify-amazonapp-test-70928-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::900826797109:role/amplify-amazonapp-test-70928-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-amazonapp-test-70928-deployment",
+      "UnauthRoleName": "amplify-amazonapp-test-70928-unauthRole",
+      "StackName": "amplify-amazonapp-test-70928",
+      "StackId": "arn:aws:cloudformation:ap-south-1:900826797109:stack/amplify-amazonapp-test-70928/a2345ab0-5c3b-11ee-b426-02af78724bbc",
+      "AmplifyAppId": "d1swszy05uvn4i"
+    },
+    "categories": {
+      "auth": {
+        "amazonappee6aedf9": {}
+      },
+      "storage": {
+        "s3amazonappstorageca75fe54": {}
+      }
+    }
+  }
+}

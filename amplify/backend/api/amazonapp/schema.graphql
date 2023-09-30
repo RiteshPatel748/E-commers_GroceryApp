@@ -1,0 +1,41 @@
+type Order @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userSub: String!
+  fullName: String!
+  phoneNumber: String
+  country: String
+  city: String
+  address: String
+  pincode: String
+}
+
+type OrderProduct @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  quantity: Int!
+  option: String
+  productID: ID!
+  orderID: ID!
+  product: Product @hasOne
+  order: Order @hasOne
+}
+
+type Product @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  description: String
+  image: String!
+  images: [String!]!
+  quantity: [String!]
+  price: Float!
+  options: [String!]
+}
+
+type CastProduct @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userSub: String!
+  quantity: Int!
+  option: String
+  product: Product @hasOne
+  productID: ID!
+}
+ 
