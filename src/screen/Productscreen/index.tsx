@@ -17,7 +17,7 @@ export default function Productscreen(){
   const [quantity, setQuantity] = useState(1);
   const route = useRoute();
   const navigation = useNavigation();
-
+  
   useEffect(() => { 
     if (!route.params?.id) {
       return;
@@ -46,7 +46,8 @@ export default function Productscreen(){
       castProductProductId:'',
     });
 
-    await DataStore.save(newCartProduct);
+    const r=await DataStore.save(newCartProduct);
+    // console.log(r)
     navigation.navigate('Shopping');
   };
 

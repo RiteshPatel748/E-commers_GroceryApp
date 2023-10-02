@@ -99,10 +99,10 @@ if(Check)
           <View style={{margin:8,justifyContent:'center',alignItems:'center'}}>
             {!uri?(<Button text="Choose Photo" onPress={handleChoosePhoto} containerStyles={{
               marginTop:60,
-              backgroundColor: 'blue', 
+              backgroundColor: '#89CFF0', 
               borderRadius: 5,
               borderWidth: 1,
-              borderColor: 'blue',
+              borderColor: '#89CFF0',
               paddingHorizontal:20,
 
             }} />):

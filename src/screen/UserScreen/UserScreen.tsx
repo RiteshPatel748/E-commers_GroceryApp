@@ -14,7 +14,7 @@ const UserScreen = () => {
     setEmailId(result.attributes.email)
     setPhoneNumbers(result.attributes.phone_number)
     setName('Ritesh Patel')
-    console.log(result)
+    // console.log(result)
   }
   useEffect(()=>{
     fetch()

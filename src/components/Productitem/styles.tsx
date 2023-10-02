@@ -28,7 +28,7 @@ page:{
  },
  title:{
    fontSize:18,
-   color:'white'
+   // color:'white'
 },
 ratingscon:{
    

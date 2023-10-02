@@ -56,7 +56,7 @@ export default AddressScreen = ()=> {
         );
          // fetch all cart items
        const cartItems = await DataStore.query(CastProduct, cp =>
-        cp.userSub('eq', userData.attributes.sub),
+        cp.userSub.eq(userData.attributes.sub),
       );
        // attach all cart items to the order
        await Promise.all(
@@ -93,7 +93,7 @@ export default AddressScreen = ()=> {
        {/*Full name*/}
        <View >
            <Text style={styles.label}>Full name(First and Last name)</Text>
-           <TextInput style={styles.input} value={fullname} onChangeText={setfullname}/>
+           <TextInput style={styles.input} value={fullname} onChangeText={setfullname} placeholder="Full Name"/>
        </View>
 
        {/*Phone Number*/}
@@ -101,6 +101,7 @@ export default AddressScreen = ()=> {
            <Text style={styles.label}>Phone number</Text>
            <TextInput style={styles.input}
             value={phone} onChangeText={setphone}
+            placeholder="Phone no."
             keyboardType={'phone-pad'}/>
        </View>
 
@@ -114,7 +115,7 @@ export default AddressScreen = ()=> {
        {/*City*/}
        <View >
            <Text style={styles.label}>City</Text>
-           <TextInput style={styles.input} value={city} onChangeText={setcity}/>
+           <TextInput style={styles.input} value={city} onChangeText={setcity} placeholder="City"/>
        </View>
         {/*State*/}
         
@@ -125,24 +126,25 @@ export default AddressScreen = ()=> {
          <Picker selectedValue={state}
           // style={{ height: 50, width: 100 }}
           onValueChange={(itemValue, itemIndex) =>
-            setState(itemValue)
+            {console.log(itemValue);
+            setState(itemValue)}
           }>
              <Picker.Item label='Select' />
-             <Picker.Item label='Bihar' />
-             <Picker.Item label='Chhattisgarh' />
-             <Picker.Item label='Karnataka' />
-             <Picker.Item label='Madhya Pradesh' />
-             <Picker.Item label='Maharashtra' />
-             <Picker.Item label='Goa' />
-             <Picker.Item label='Gujarat' />
-             <Picker.Item label='Uttar Pradesh' />
+             <Picker.Item label='Bihar' value={'Bihar'}/>
+             <Picker.Item label='Chhattisgarh' value={'Chhattisgarh'} />
+             <Picker.Item label='Karnataka' value={'Karnataka'}/>
+             <Picker.Item label='Madhya Pradesh' value={'Madhya Pradesh'}/>
+             <Picker.Item label='Maharashtra' value={'Maharashtra'}/>
+             <Picker.Item label='Goa' value={'Goa'}/>
+             <Picker.Item label='Gujarat' value={'Gujarat'}/>
+             <Picker.Item label='Uttar Pradesh' value={'Uttar Pradesh'}/>
          </Picker>
         </View>
         </View>
         <View style={[styles.zip,]}>
         <Text style={styles.label}>ZIP Code</Text>
         <TextInput style={styles.state} 
-            value={zip} onChangeText={setzip} keyboardType='number-pad'/>
+            value={zip} onChangeText={setzip} keyboardType='number-pad' placeholder="Zip Code"/>
         </View>
         </View>
         <Button text="Checkout" onPress={onCheckout} />

@@ -23,7 +23,7 @@ const Stack = createStackNavigator();
       }
     },[searchValue])
     return (
-      <SafeAreaView style={{backgroundColor: '#22e3dd',height:searchValue?'100%':80,marginTop:searchValue?0:10}}>
+      <SafeAreaView style={{backgroundColor: '#22e3dd',height:searchValue?'100%':80,}}>
         <View
           style={{
             margin: 10,

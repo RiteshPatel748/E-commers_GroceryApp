@@ -11,7 +11,7 @@ import {DataStore} from 'aws-amplify';
   
   const CartProductItem = ({cartItem}: CartProductItemProps) => {
 
-    console.log(cartItem);
+    // console.log(cartItem);
     const {product, ...cartProduct} = cartItem;
   
     const updateQuantity = async (newQuantity: number) => {
@@ -34,11 +34,11 @@ import {DataStore} from 'aws-amplify';
      
       <View style={styles.root}>
         <Image style={styles.image} 
-          source={{uri:product.image}}/>
+          source={{uri:product?.image}}/>
           <View style={styles.titlec}>
-            <Text style={styles.title} numberOfLines={3}> {product.title}</Text>
+            <Text style={styles.title} numberOfLines={3}> {product?.title}</Text>
           
-            <Text style={styles.price}>from ${product.price.toFixed(2)}</Text>
+            <Text style={styles.price}>from ${product?.price?.toFixed(2)}</Text>
           </View>    
       </View>
       <View style={styles.quantity}>

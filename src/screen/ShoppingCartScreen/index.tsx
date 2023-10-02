@@ -15,71 +15,71 @@ export default function ShoppingCartScreen () {
 
   const fetchCartProducts = async () => {
     const userData = await Auth.currentAuthenticatedUser();
-    // TODO query only my cart items
-    DataStore.query(CastProduct, cp =>
-      cp.userSub('eq', userData.attributes.sub),
-    ).then(setCartProducts);
+    const subscription = DataStore.observeQuery(CastProduct, c=>c.userSub.eq(userData.attributes.sub)).subscribe(async msg => {
+      if(msg){
+        console.log('msg',msg.items)
+        setCartProducts(msg.items)
+        fetchProducts(); 
+      }
+    })
   };
 
   useEffect(() => {
     fetchCartProducts();
   }, []);
 
+  const fetchProducts = async () => {
+    const products = await Promise.all(
+      cartProducts.map(cartProduct =>
+        DataStore.query(Product, cartProduct.productID),
+      ),
+    );
+    setCartProducts(currentCartProducts =>
+      currentCartProducts.map(cartProduct => ({
+      ...cartProduct,
+      product: products.find(p => p.id === cartProduct.productID),
+      })),
+    );
+  };
   useEffect(() => {
     if (cartProducts.filter(cp => !cp.product).length === 0) {
       return;
     }
-    const fetchProducts = async () => {
-      // query all products that are used in cart
-      const products = await Promise.all(
-        cartProducts.map(cartProduct =>
-          DataStore.query(Product, cartProduct.productID),
-        ),
-      );
-
-      // assign the products to the cart items
-      setCartProducts(currentCartProducts =>
-        currentCartProducts.map(cartProduct => ({
-        ...cartProduct,
-        product: products.find(p => p.id === cartProduct.productID),
-        })),
-      );
-    };
 
     fetchProducts();
   }, [cartProducts]);
 
-  useEffect(() => {
-    const subscription = DataStore.observe(CastProduct).subscribe(msg =>
-      fetchCartProducts(),
-    );
-    return subscription.unsubscribe;
-  }, []);
+  // useEffect(() => {
+  //   const subscription = DataStore.observe(CastProduct).subscribe(msg =>
+  //     fetchCartProducts(),
+  //   );
+  //   return subscription.unsubscribe;
+  // }, []);
 
-  useEffect(() => {
-    const subscriptions = cartProducts.map(cp =>
-      DataStore.observe(CastProduct, cp.id).subscribe(msg => {
-        if (msg.opType === 'UPDATE') {
-          setCartProducts(curCartProducts =>
-            curCartProducts.map(cp => {
-              if (cp.id !== msg.element.id) {
-                console.log('differnt id');
-                return cp;
-              }
-              return {
-                ...cp,
-                ...msg.element,
-              };
-            }),
-          );
-        }
-      }),
-    );
+  // useEffect(() => {
+  //   const subscriptions = cartProducts.map(cp =>
+  //     DataStore.observe(CastProduct, cp.id).subscribe(msg => {
+  //       if (msg.opType === 'UPDATE') {
+  //         setCartProducts(curCartProducts =>
+  //           curCartProducts.map(cp => {
+  //             if (cp.id !== msg.element.id) {
+  //               console.log('differnt id');
+  //               return cp;
+  //             }
+  //             return {
+  //               ...cp,
+  //               ...msg.element,
+  //             };
+  //           }),
+  //         );
+  //       }
+  //     }),
+  //   );
 
-    return () => {
-      subscriptions.forEach(sub => sub.unsubscribe());
-    };
-  }, [cartProducts]);
+  //   return () => {
+  //     subscriptions.forEach(sub => sub.unsubscribe());
+  //   };
+  // }, [cartProducts]);
 
   const totalPrice = cartProducts.reduce(
     (summedPrice, product) =>
@@ -94,7 +94,7 @@ export default function ShoppingCartScreen () {
   const deleteItem = async() =>{
     const userData = await Auth.currentAuthenticatedUser();
     const cartItems = await DataStore.query(CastProduct, cp =>
-      cp.userSub('eq', userData.attributes.sub),
+      cp.userSub.eq(userData.attributes.sub),
     );
     await Promise.all(cartItems.map(cartItem => DataStore.delete(cartItem)));
     setAuthUserId();
@@ -132,9 +132,9 @@ export default function ShoppingCartScreen () {
          ListHeaderComponent={()=>
          <View>
          <Text style={{fontSize: 18}}>
-              Subtotal ({cartProducts.length} items):{' '}
+              Subtotal ({cartProducts?.length} items):{' '}
               <Text style={{color: '#e47911', fontWeight: 'bold'}}>
-                ${totalPrice.toFixed(2)}
+                ${totalPrice?.toFixed(2)}
               </Text>
             </Text>
          <Button text={'Proceed to checkout'} 
